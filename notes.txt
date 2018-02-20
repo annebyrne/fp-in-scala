@@ -1,0 +1,78 @@
+Chapter 1
+
+An overview of the principles & benefits of FP ( functional programming: binary relations that map arguments to results )
+
+1. What is a pure function?
+
+    FP attempts to build programs with only pure functions.
+    A pure function is one without side effects. 
+
+2. What is referential transparency?
+
+    An expression is referentially transparent if we can replace all occurences of the expression with the result of evaluating it. 
+    This shouldn't affect the program. For example:
+
+    f(e) => e + 2
+    f(2) => 4
+
+    Given there are no side effects, this should not affect the running of the program.
+    Referential transparency forces the invariant that everything a fn does is represented by the value it returns
+
+3. What is the substitution method?
+
+    This is a type of reasoning that is enabled in FP by the constraint of Referential Transparency
+    We proceed through the function as if it was an algebraic equation
+    We expand each expression to its evaluated result, and simplify. Computation proceeds by substituting equals for equals
+
+
+4. Benefits of FP
+
+    Because of their modularity, pure fns are easier to test & reuse
+    We can generalize and reason through functions using the substitution model
+    They should be reusable: we should be able to expect the same result every time
+
+Chapter 2
+
+Introduction to basic Scala syntax, the importance of tail order recursion in Scala and Higher Order fns. A look at what polymorphism
+means in Scala.
+
+1. Higher Order functions
+
+    Functions are themselves values,, and so are objects. This means they can be stored in variables & passed as arguments
+    We call a function a HOF if they accept functions as parameters.
+    When working with HOFs we typically use anonymous functions, or function literals, rather than passing a named function.
+
+
+2. Polymorphism in Scala
+
+    When working in Scala, and often with HOFs, we want to abstract over so that we can accept a function that works for any type.
+    These are called polymorphic functions, and accept type parameters.
+    This is often referred to as parametric polymorphism.
+    These can also be called generic functions, as we are abstracting over the type.
+
+    Exercise 2.1 - Write a recursive function to get the nth Fibonacci no
+    Exercise 2.2 - Implement the function isSorted
+    Exercise 2.3 - Implement a currying function
+    Exercise 2.4 - Implement uncurry, that reverses a curry transformation
+    Exercise 2.5 - Implement the HOF that composes two functions
+
+Chapter 3
+
+Functional data structures
+Singly linked list
+Sealed traits
+Companion objects
+Pattern matching
+Variadic functions
+Data sharing
+Runtime & memory usage
+
+    Exercise 3.1 - Evaluate a pattern match
+    Exercise 3.2 - Implement the function tail for removing the first element of a list
+    Exercise 3.3 - Implement the function setHead for replacing the first element of a list
+    Exercise 3.4 - Generalize tail to the function drop, which removes the first n elements of a list
+    Exercise 3.5 - Implement dropWhile, which removes elements as long as they match a predicate
+    Exercise 3.6 - Implement a function init, that returns a List consisting of all but the last element of a List.
+    Exercise 3.7 - 
+
+
