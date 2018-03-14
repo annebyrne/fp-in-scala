@@ -1,12 +1,14 @@
-object ChapterOne {
+package fpinscala
 
-    def fib(n: Int): Int = {
+object ChapterTwo {
+
+    def fib(n: Int): Int =  {
         def compute(current: Int): Int = {
             if (current <= 2) current - 1 
             else compute(current-1) + compute(current-2)
         }
         compute(n)
-    }
+    }           
 
     def isSorted[A](as: Array[A], ordered: (A, A) => Boolean): Boolean = {
         
@@ -18,7 +20,7 @@ object ChapterOne {
                 ordered(as(n), as(n+1)) match {
                     case true => checkPattern(n+1)
                     case false => false
-                }
+                } 
             }
         }
 
@@ -31,8 +33,6 @@ object ChapterOne {
     def uncurry[A, B, C](f: A => B => C): (A, B) => C =  (a: A, b: B) => f(a)(b)
 
     def compose[A, B, C](f: B => C, g: A => B): A => C = (a: A) => f(g(a))
-
-
 
 }
 
