@@ -24,24 +24,19 @@ object List {
   }
 
   def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = {
-    foldRight(as, (b: B) => B)((a, g) => b => g(f(b, a)))(z)
-  }
-
-  foldLeft(List(1, 2, 3), 0)(_ + _)
-  foldRight(List(1, 2, 3), (b: B) => B)((a, g) => b => g((_ + _)(b, a)))(0)
-  foldRight(List(1, 2, 3), (b: B) => B) ((a, g) => b => g((_ + _)(b, a)))(0)
-   (1, foldRight(List(2, 3), )())
-
-
-  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = {
     as match {
       case Nil => z
       case Cons(h, t) => foldLeft( t, f(z,h) )(f)
     }
   }
 
+  def foldLeftViaFoldRight[A,B](as: List[A], z: B)(f: (B, A) => B): B = {
+    foldRight(as, (b: B) => B)((a, g) => b => g(f(b, a)))(z)
+  }
 
-  
+  def foldRightViaFoldLeft[A, B](as: List[A], z: B)(f: (A, B) => B): B = {
+    foldLeft(List.reverse(as), z)((b, a) => f(a, b))
+  }
 
   // product implemented using foldRight. Can it immediately
   // halt the recursion and return 0.0 if it encounters a 0.0?
@@ -125,20 +120,34 @@ object List {
     // look up ListBuffers
   }
 
-  // can we write foldLeft in terms of foldRight?
-  // def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B
-
-  def foldLeft(l: List[A], z: B)(f: (B, A) => B): B = {
-    foldRight(l: List[A], f(z) )(f(a, b))
+  def append[A](as: List[A], bs: List[A]): List[A] = {
+    foldRight((as), bs)(Cons(_, _))
   }
 
-  // can we write foldRight in terms of foldLeft?
-  // def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B
+  def concat[A](as: List[List[A]]): List[A] = {
+    foldRight(as, Nil: List[A])(append)
+  }
 
-  // def length[A](as: List[A]): Int = foldRight(as, 0)((_, acc) => acc + 1)
-  // grouping function arguments allow us to maximise type inference
+  def addOne(as: List[Int]): List[Int] = {
+    foldRight(as, Nil: List[Int])((h, t) => Cons(h+1, t))
+  }
 
-  // how come we can't set the head of an empty list (ie. Nil => Cons(x, Nil))
-  // but we can append a tail to an empty list? (ie. Nil => Cons(Nil, xs))
+  def doubleToString(ad: List[Double]): List[String] = {
+    foldRight(as, Nil: List[String])((h, t) => Cons(h.toString, t))
+  }
+
+  def map[A, B](as: List[A])(f: A => B): List[B] = {
+    foldRight(as, Nil: List[B])((a, b) => Cons(f(a), b))
+  }
+
+   def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+    foldRight(as, Nil: List[A])((a, b) => if (f(a)) Cons(a, b) else b )
+  }
+
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] = {
+    concat(map(as)(f))
+  }
+
+
 }
 
